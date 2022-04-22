@@ -1,38 +1,326 @@
+:root {
+  --dark-blue: rgb(9,74,113);
+  --blue: rgb(0,115,153);
+  --light-blue: rgb(121,185,212);
+  --gray-blue: rgb(114,177,203);
+}
+
 .App {
-  text-align: center;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/*Chat properties*/
+.chat {
+  /* background-color: var(--dark-blue); */
+  background-image: url('assets/underwater.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: 0 20%;
+  height:100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.chat-head {
+  background-color: var(--light-blue);
+  width: 100%;
+  height: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  padding-left: 10px;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.messages * {
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.userMsg, .compMsg {
+  max-width: 40%;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.userMsg {
+  background-color: var(--light-blue);
+  align-self: flex-end;
+}
+
+.compMsg {
+  background-color: var(--dark-blue);
+  align-self: flex-start;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.chat-tail {
+  background-color: var(--light-blue);
+  margin-top: auto;
+  display: flex;
+  flex-direction: row;
+  padding: 5px 5px;
+  align-items: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.form-text{
+  /* border: 1px solid black; */
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+
+.chat-tail textarea {
+  background-color: transparent;
+  width: 90%;
+  border: none;
+  font-size: 1.05rem;
+  font-family: inherit;
+  resize: none;
+  cursor: auto;
+  min-height: 30px;
+  max-height: 100px;
+  line-height: 20px;
+}
+
+.chat-tail textarea:focus {
+  outline: none;
+  border: none;
+}
+
+.chat-tail textarea::-webkit-scrollbar {
+  width: 0.35rem;
+}
+
+.chat-tail textarea::-webkit-scrollbar-thumb {
+  background-color: var(--blue);
+  border-radius: 0.15rem;
+}
+
+button#submit {
+  background-color: transparent;
+  /* border: 1px solid black; */
+  margin-left: auto;
+  color: var(--dark-blue);
+  
+}
+
+button#submit svg{
+  width: 40px;
+  height: 40px;  
+}
+button#submit .st1 {
+  fill: var(--dark-blue);
+}
+
+button#submit:hover, button#submit-image:hover {
+  cursor: pointer;
+}
+
+button#submit .st1:hover {
+  fill: black;
+}
+
+button#submit-image {
+  color:var(--dark-blue);
+}
+
+button#submit-image svg {
+  /* border: 1px solid black; */
+  width:25px;
+  height:25px;
+}
+
+button#submit-image:hover {
+  color: black;
+}
+
+/*The end of Chat properties*/
+
+/* User properties */
+
+.user-container {
+  position: fixed;
+  width:100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: first-appearance 200ms ease-in;
+}
+
+@keyframes first-appearance {
+  0%{
+    opacity: 0%;
   }
-  to {
-    transform: rotate(360deg);
+  100%{
+    opacity: 100%;
+  }
+}
+
+#user-picture {
+  transform: translate(0,50%);
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+}
+
+.user-menu {
+  width: 300px;
+  background-color: white;
+  min-height: 100px ;
+  border-radius: 20px;
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-menu li {
+  /* border: 1px solid black; */
+  font-size: 1.5rem;
+  flex-grow: 1;
+  width: 100%;
+  height: 80px;
+  border-bottom: 1px solid var(--dark-blue);
+}
+
+.user-menu li button {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  white-space: pre;
+}
+
+.user-menu button:hover {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#log-out {
+  color: red;
+  /* border: 1px solid black; */
+  font-size: 1.2rem;
+  width: auto;
+  height: auto;
+  margin-left: 50%;
+  transform: translate(-50%,0);
+}
+
+#log-in {
+  /* border: 1px solid black; */
+  color: var(--dark-blue);
+  font-size: 1.2rem;
+}
+
+/* The end of User properties */
+
+.list-of-chats {
+  background-color: var(--light-blue);
+  border-right: 1px solid var(--blue);
+  height: 100vh;
+  width: 30%;
+  max-width: 350px;
+  color: black;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+button#menu {
+  color:var(--dark-blue);
+  background-color: transparent;
+  height: 50px;
+  width: 50px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: none;
+  transition: color 100ms ease-in;
+}
+
+button#menu svg {
+  /* border: 1px solid black; */
+  width: inherit;
+  height: 100%;
+  padding: 10px;
+}
+
+button#menu:hover {
+  color:black;
+  cursor: pointer;
+}
+
+.element-of-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  overflow: hidden;
+  transition: background-color 100ms ease-in;
+}
+
+.element-of-list-icon {
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
+  background-color: var(--dark-blue);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.element-of-list-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+
+.element-of-list:hover {
+  cursor: pointer;
+  background-color: var(--gray-blue);
+}
+
+.element-of-list-focused {
+  background-color: var(--blue);
+  color: white;
+}
+
+.element-of-list-focused:hover {
+  background-color: var(--blue);
+}
+
+@media only screen and (max-width: 800px) {
+  .list-of-chats {
+    width:50px;
+    transition: width 400ms ease-in;
+  }
+  .chat {
+    width: 100%;
+  }
+  .userMsg, .compMsg {
+    max-width: 70%;
+  }
+  .list-of-chats:hover {
+    width:400px;
+  }
+  .element-of-list p, .element-of-list-name p {
+    overflow: hidden;
   }
 }
