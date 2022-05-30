@@ -172,9 +172,10 @@ button#submit-image:hover {
 
 #user-picture {
   transform: translate(0,50%);
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   overflow: hidden;
+  border-radius: 45px;
 }
 
 .user-menu {

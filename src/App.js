@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
-import Chat from './components/Chat';
+import Chat from './components/Chat/Chat';
 import ListOfChats from './components/ListOfChats';
 import User from './components/User';
+import { auth } from './firebase';
 
 function App() {
-  let [chatId, setChatId] = useState(0);
-  let [userWindow, setUserWindow] = useState(true);
-  let list=[{name:'test'},{name:'test2'},{name:'iamtest3'}]
+  const [chatId, setChatId] = useState(0);
+  const [userWindow, setUserWindow] = useState(true);
+  let list=[{name:'test'},{name:'test2'},{name:'iamtest3'}];
 
   return (
     <div className="App">

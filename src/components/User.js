@@ -2,15 +2,46 @@ import favicon from '../assets/favicon.svg';
 import { MdLogin, MdLogout } from "react-icons/md";
 import { GiOctoman } from "react-icons/gi";
 import { BsFillPeopleFill} from "react-icons/bs";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { auth } from '../firebase';
+import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 
 const preventClosing = (e) => {
   e.stopPropagation();
 }
 
-const User = ({setUserWindow}) => {
-  let [signedIn, setSignedIn] = useState(true);
+//authentication with Google
+const signIn = async () => {
+  const provider = new GoogleAuthProvider();
+  console.log('signing in');
+  await signInWithPopup(auth, provider);
+}
 
+console.log('user.js is running');
+
+const User = ({setUserWindow}) => {
+  const [signedIn, setSignedIn] = useState(false);
+  const [userPhoto, setUserPhoto] = useState(null);
+
+  useEffect(()=>{
+    onAuthStateChanged(auth, (user) => {
+      if(user) {
+        console.log('user is signed in!');
+        // user.uid - temprorary id
+        console.log(`id: ${user.uid}
+          display name: ${user.displayName}
+          email: ${user.email}
+          photoURL: ${user.photoURL}
+        `);
+        setUserPhoto(user.photoURL);
+        setSignedIn(true);
+      } else {
+        console.log('user is not signed in');
+        setUserPhoto(null);
+        setSignedIn(false);
+      }
+    })
+  }, [setSignedIn]);
 
   const rmUserWindow = (e) => {
     setUserWindow(false);
@@ -18,16 +49,20 @@ const User = ({setUserWindow}) => {
 
   const changeSignedIn = () => {
     if(signedIn) {
-      setSignedIn(false);
+      signOut(auth).then(() => {
+        console.log('you have signed out!');
+      })
+      // setSignedIn(false);
     } else {
-      setSignedIn(true);
+      signIn();
+      // setSignedIn(true);
     }
   }
 
   return (
-    <div className="user-container" onClick={signedIn&&rmUserWindow}>
+    <div className="user-container" onClick={signedIn?rmUserWindow:undefined}>
       <div id="user-picture">
-        <img src={favicon} alt="user" onClick={preventClosing}></img>
+        <img src={userPhoto||favicon} alt="user" onClick={preventClosing}></img>
       </div>
       {signedIn
       ?(<ul className="user-menu" onClick={preventClosing}>      
