@@ -3,8 +3,9 @@ import { MdLogin, MdLogout } from "react-icons/md";
 import { GiOctoman } from "react-icons/gi";
 import { BsFillPeopleFill} from "react-icons/bs";
 import { useEffect, useState } from 'react';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
 import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import { collection, doc, setDoc } from 'firebase/firestore';
 
 const preventClosing = (e) => {
   e.stopPropagation();
@@ -17,6 +18,16 @@ const signIn = async () => {
   await signInWithPopup(auth, provider);
 }
 
+const saveUserToFirestore = async (user) => {
+  const userRef = doc(db, 'users', user.uid);
+  await setDoc(userRef, {
+    uid: user.uid,
+    displayName: user.displayName,
+    photoURL: user.photoURL,
+    email: user.email
+  });  
+}
+
 console.log('user.js is running');
 
 const User = ({setUserWindow}) => {
@@ -24,7 +35,7 @@ const User = ({setUserWindow}) => {
   const [userPhoto, setUserPhoto] = useState(null);
 
   useEffect(()=>{
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if(user) {
         console.log('user is signed in!');
         // user.uid - temprorary id
@@ -33,6 +44,7 @@ const User = ({setUserWindow}) => {
           email: ${user.email}
           photoURL: ${user.photoURL}
         `);
+        saveUserToFirestore(user);
         setUserPhoto(user.photoURL);
         setSignedIn(true);
       } else {
@@ -40,7 +52,9 @@ const User = ({setUserWindow}) => {
         setUserPhoto(null);
         setSignedIn(false);
       }
-    })
+    });
+    console.log('unsubscribe: ',unsubscribe);
+    return unsubscribe;
   }, [setSignedIn]);
 
   const rmUserWindow = (e) => {
