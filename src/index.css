@@ -24,3 +24,17 @@ button {
   font-family: inherit;
   font-size: inherit;
 }
+
+button:hover {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+option {
+  /* font-family: inherit; */
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+}

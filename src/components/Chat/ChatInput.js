@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import {ReactComponent as Rocket} from '../../assets/just-rocket.svg';
 import { FiPaperclip } from "react-icons/fi";
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import { auth, db } from '../../firebase';
+import { db } from '../../firebase';
+import { useAuth } from '../contexts/AuthContext';
 
 const uid = "HgIDzpvU9xhV8x28rDjWCH1xQxx2";
 
@@ -12,16 +13,9 @@ const autoGrow = (e) => {
   e.target.style.height = e.target.scrollHeight+'px';
 }
 
-const getUserNamePhoto = () => {
-  const user = auth.currentUser;
-  console.log('user tokens are equal: ', user.uid === uid);
-  const name = user.displayName;
-  const photoURL = user.photoURL;
-  return {name, photoURL};
-}
-
 export default function ChatInput() {
   const [textMsg, setTextMsg] = useState('');
+  const { user } = useAuth();
 
   const trackTextMsg = (e) => {
     setTextMsg(e.target.value);
@@ -34,7 +28,8 @@ export default function ChatInput() {
       console.log(textMsg);
       try {
         await addDoc(collection(db, 'chats', 'chat1', 'messages'), {
-          ...getUserNamePhoto(),
+          name: user.displayName,
+          photoURL: user.photoURL,
           text: textMsg,
           timestamp: serverTimestamp()
         });

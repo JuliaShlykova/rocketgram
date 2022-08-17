@@ -198,18 +198,13 @@ button#submit-image:hover {
   border-bottom: 1px solid var(--dark-blue);
 }
 
-.user-menu li button {
+.user-menu li>button {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   white-space: pre;
-}
-
-.user-menu button:hover {
-  cursor: pointer;
-  font-weight: bold;
 }
 
 #log-out {
@@ -222,12 +217,89 @@ button#submit-image:hover {
   transform: translate(-50%,0);
 }
 
-#log-in {
-  /* border: 1px solid black; */
-  color: var(--dark-blue);
-  font-size: 1.2rem;
+/* Authentication */
+.log-in-container {
+  background-color: white;
+  min-height: 100px ;
+  border-radius: 20px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+.form-log-in {
+  background-color: white;
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+}
+
+.form-log-in button {
+  margin-top: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+#link-to-forgot-password, #link-to-signup, #link-to-login {
+  cursor:pointer;
+  text-decoration: underline;
+  color: var(--dark-blue);
+}
+
+#error-passwords-not-equal {
+  color: red;
+  font-size: 0.8rem;
+}
+
+#log-in {
+  border: 1px solid black;
+  color: var(--dark-blue);
+  font-size: 1.2rem;
+  margin: 20px 0;
+}
+/* Add new chat */
+.add-chat-container {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: first-appearance 200ms ease-in;
+}
+
+.form-add-user {
+  background-color: white;
+  width: 350px;
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-add-user *{
+  margin: 10px;
+}
+
+.form-add-user select {
+  height: 40px;
+}
+
+.form-add-user select option {
+  font-size: 1.1rem;
+  padding: 5px 0 5px 10px;
+}
+
+.form-add-user button {
+  border: 1px solid black;
+  border-radius: 10px;
+}
 /* The end of User properties */
 
 .list-of-chats {

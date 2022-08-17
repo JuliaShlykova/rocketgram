@@ -3,7 +3,7 @@ import './App.css';
 import Chat from './components/Chat/Chat';
 import { AuthProvider } from './components/contexts/AuthContext';
 import ListOfChats from './components/ListOfChats';
-import User from './components/User';
+import Menu from './components/Menu';
 
 function App() {
   const [chatId, setChatId] = useState(0);
@@ -13,7 +13,7 @@ function App() {
   return (
     <AuthProvider>
     <div className="App">
-      {userWindow?<User setUserWindow={setUserWindow} />:null}
+      {userWindow?<Menu setUserWindow={setUserWindow} />:null}
       <ListOfChats focused={chatId} setChatId={setChatId} list={list} setUserWindow={setUserWindow} />
       <Chat chatId={chatId} name={list[chatId].name}/>
     </div>
