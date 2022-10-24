@@ -1,28 +1,22 @@
 import favicon from '../assets/favicon.svg';
-import { MdLogin, MdLogout } from "react-icons/md";
-
-import { BsFillPeopleFill} from "react-icons/bs";
+import { MdLogout } from "react-icons/md";
 import { useEffect, useState } from 'react';
-import { database } from '../firebase';
 import { useAuth } from './contexts/AuthContext';
 import AddNewChat from './AddNewChat';
-import Login from './Authentication/Login';
 import AuthenticationModal from './Authentication/AuthenticationModal';
+import AddNewGroup from './AddNewGroup';
 
 const preventClosing = (e) => {
   e.stopPropagation();
 }
 
-console.log('menu.js is running');
+const Menu = ({setUserWindow, setChatId}) => {
+  const [userPhoto, setUserPhoto] = useState(favicon);
+  const { currentUser, logout, displayName } = useAuth();
 
-const Menu = ({setUserWindow}) => {
-  const [userPhoto, setUserPhoto] = useState(null);
-  const { currentUser, logout } = useAuth();
-  
   useEffect(() => {
-    if(currentUser) {
-      database.saveUserToFirestore(currentUser);
-      setUserPhoto(currentUser?.photoURL);
+    if(currentUser?.photoURL) {
+      setUserPhoto(currentUser.photoURL);
     }
   }, [currentUser]);
 
@@ -31,25 +25,26 @@ const Menu = ({setUserWindow}) => {
   }
 
   const handleLogout = () => {
-    setUserPhoto(null);
+    setUserPhoto(favicon);
+    setChatId('main');
     logout();
   }
 
   return (
     <div className="user-container" onClick={currentUser?rmUserWindow:undefined}>
       <div id="user-picture">
-        <img src={userPhoto||favicon} alt="user" onClick={preventClosing} referrerPolicy="no-referrer"></img>
+        <img src={userPhoto} alt="user" onError={()=>{setUserPhoto(favicon)}} onClick={preventClosing} referrerPolicy="no-referrer"></img>
       </div>
       {currentUser
       ?(<ul className="user-menu" onClick={preventClosing}> 
-      {currentUser.displayName}     
+      <span>{displayName}</span>     
         <li>
           <button id="log-out" onClick={handleLogout}>
             <MdLogout /> Log Out
           </button>
         </li>
-        <li><AddNewChat setUserWindow={setUserWindow} /></li>
-        <li><button><BsFillPeopleFill /> Create Group</button></li>
+        <li><AddNewChat setUserWindow={setUserWindow} setChatId={setChatId}/></li>
+        <li><AddNewGroup setUserWindow={setUserWindow} setChatId={setChatId}/></li>
 
       </ul>)
       :<AuthenticationModal />}

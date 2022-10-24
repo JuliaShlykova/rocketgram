@@ -1,21 +1,15 @@
 import React, { useState } from 'react'
-import {ReactComponent as Rocket} from '../../assets/just-rocket.svg';
+import { ReactComponent as Rocket } from '../../assets/just-rocket.svg';
 import { FiPaperclip } from "react-icons/fi";
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import { db } from '../../firebase';
-import { useAuth } from '../contexts/AuthContext';
-
-const uid = "HgIDzpvU9xhV8x28rDjWCH1xQxx2";
+import { database } from '../../firebase';
 
 const autoGrow = (e) => {
   e.target.style.height = '16px';
-  // e.target.style.maxHeight = '100px';
   e.target.style.height = e.target.scrollHeight+'px';
 }
 
-export default function ChatInput() {
+export default function ChatInput({chatId, currentUser, displayName}) {
   const [textMsg, setTextMsg] = useState('');
-  const { user } = useAuth();
 
   const trackTextMsg = (e) => {
     setTextMsg(e.target.value);
@@ -25,17 +19,7 @@ export default function ChatInput() {
     e.preventDefault();
     if (textMsg !== '') {
       setTextMsg('');
-      console.log(textMsg);
-      try {
-        await addDoc(collection(db, 'chats', 'chat1', 'messages'), {
-          name: user.displayName,
-          photoURL: user.photoURL,
-          text: textMsg,
-          timestamp: serverTimestamp()
-        });
-      } catch (error) {
-        console.log('Error when writing new message to Firebase Database', error);
-      }
+      database.saveMsgToGroup(chatId, textMsg, currentUser, displayName);
     }
   }
 
@@ -46,6 +30,7 @@ export default function ChatInput() {
   }
 
   return (
+    <div className="chat-tail-container">
     <div  className="chat-tail">
     <form>
       <button id="submit-image" onClick={(e)=>{e.preventDefault();}}><FiPaperclip /> </button>
@@ -54,6 +39,7 @@ export default function ChatInput() {
       <textarea onInput={autoGrow} minLength={1} maxLength={500} value={textMsg} onChange={trackTextMsg} onKeyDown={submitEnter}></textarea>
       <button id="submit" aria-label="send" title="send" onClick={sendMsg}> <Rocket /> </button>
     </form>
+  </div>
   </div>
   )
 

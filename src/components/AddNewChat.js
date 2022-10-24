@@ -3,7 +3,7 @@ import { GiOctoman } from "react-icons/gi";
 import { database } from '../firebase';
 import { useAuth } from './contexts/AuthContext';
 
-export default function AddNewChat({setUserWindow}) {
+export default function AddNewChat({setUserWindow,setChatId}) {
   const [open, setOpen] = useState(false);
   const [otherUsers, setOtherUsers] = useState(null);
   const [chosenUser, setChosenUser] = useState(null);
@@ -30,14 +30,17 @@ export default function AddNewChat({setUserWindow}) {
     e.preventDefault();
     setOpen(false);
     setUserWindow(false);
-    database.createGroup({userId: currentUser.uid, plural: false, chosenUserId:chosenUser});
+    (async function(){
+      let docId = await database.createGroup({userId: currentUser.uid, plural: false, chosenUserId:chosenUser});
+      setChatId(docId);
+    })()
   }
 
   return (
     <>
     <button onClick={openDialogue}><GiOctoman /> Add New Chat</button>
     {open&&(<div className="add-chat-container" onClick={closeDialogue}>
-      <form onSubmit={handleSubmit} onClick={(e)=>{e.stopPropagation()}} class="form-add-user">
+      <form onSubmit={handleSubmit} onClick={(e)=>{e.stopPropagation()}} className="form-add-user">
         <label htmlFor='user-select'>Choose a person</label>
         <select id="user-select" onChange={(e)=>{let i=e.target.selectedIndex;setChosenUser(e.target.options[i].value)}} required>
         <option value=""></option>
