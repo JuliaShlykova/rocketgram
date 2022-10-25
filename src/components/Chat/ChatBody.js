@@ -12,26 +12,34 @@ export default function ChatBody({ chatId='main' }) {
   useEffect(()=>{
     const q = query(database.groupMessages(chatId),orderBy('sentAt'));
     const cleanUp = onSnapshot(q, snapshot=>{
-      setMessages([]);
-      snapshot.docs.forEach(doc=>{
-        setMessages(msgs=>{
-          msgs.push(doc.data());
-          return msgs;
-        });
+      // setMessages([]);
+      let msgsSnap = [];
+      let n = snapshot.docs.length;
+      snapshot.docs.forEach((doc,i)=>{
+        msgsSnap.push(doc.data());
+        // setMessages(msgs=>{
+        //   msgs.push(doc.data());
+        //   return msgs;
+        // });
+        if (i===n-1) {
+          setMessages(msgsSnap);
+        }
       })
     });
-    return cleanUp;
+    return function(){
+      setMessages([]);
+      cleanUp();
+    }
   }, [chatId]);
 
   useEffect(()=>{
-    if(messages.length>0) {
       bottomRef.current?.scrollIntoView({behavior: 'smooth'});
-    }
   }, [messages]);
 
   return (
     <div className="messages">
       {messages.map((msg,i)=>{
+        bottomRef.current?.scrollIntoView({behavior: 'smooth'});
         if(msg.sentBy===currentUser?.uid){
           return <div key={i} className="userMsg">{msg.messageText}</div>
         } else{

@@ -41,10 +41,6 @@ export function AuthProvider({children}) {
       database.saveUserToFirestore(cred.user);
     } else{
       cred = await signInWithEmailAndPassword(auth, email, password);
-      let userFromFirestore = await database.getUserInfo(cred.user.uid);
-      let displayName = userFromFirestore.displayName;
-      setDisplayName(displayName);
-      database.saveUserToFirestore(cred.user, displayName);
     }
   }
 
