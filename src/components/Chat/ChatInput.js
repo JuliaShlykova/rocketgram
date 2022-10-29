@@ -30,8 +30,8 @@ export default function ChatInput({chatId, currentUser, displayName}) {
   }
 
   return (
-    <div className="chat-tail-container">
-    <div  className="chat-tail">
+  <div className="chat-tail-container">
+  <div  className="chat-tail">
     <form>
       <button id="submit-image" onClick={(e)=>{e.preventDefault();}}><FiPaperclip /> </button>
     </form>

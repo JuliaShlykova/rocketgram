@@ -68,7 +68,6 @@ export default function ChatHead({name, members}) {
     root.style.setProperty('--hover-chat', 'rgb(114,177,203)');
     getDownloadURL(ref(storage, 'underwater.jpg'))
     .then((url) => {
-      console.log(url);
       root.style.setProperty('--bcgr-image', 'url('+url+')');
     })
     .catch((e) => {

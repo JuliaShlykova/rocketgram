@@ -16,8 +16,6 @@ export default function AddNewChat({setUserWindow,setChatId}) {
     })()
   },[setOtherUsers, currentUser]);
   
-  
-
   const openDialogue = () => {
     setOpen(true);
   }

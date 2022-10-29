@@ -16,14 +16,14 @@ const ListOfChats = ({
   const { currentUser } = useAuth();
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(doc(db, 'users', currentUser.uid), doc=>{
+    const unsubscribe = onSnapshot(doc(db, 'users', currentUser.uid), doc => {
       if (doc.data()) {      
         const groupIds = doc.data().groups;
         setGroupIdsList(groupIds);
       }
     });
     return unsubscribe;
-  },[currentUser]);
+  }, [currentUser]);
 
   return (
     <div className="list-of-chats">

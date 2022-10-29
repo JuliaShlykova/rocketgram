@@ -21,7 +21,7 @@ export default function SignUp({setState, setError}) {
       await signup({email, password, displayName});
     } catch(e) {
       setError('Failed to sign up');
-    } finally{
+    } finally {
       setLoading(false);
     }
   }

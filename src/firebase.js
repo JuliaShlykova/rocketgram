@@ -4,7 +4,7 @@ import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, getFirestore, que
 import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 
-// Your web apps Firebase configuration
+// Firebase configuration object
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -16,7 +16,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 const storage = getStorage(app);
 const auth = getAuth(app);
@@ -66,7 +65,6 @@ const database = {
     } catch {
       console.error('Failed to add user to Firestore');
     }
-
   },
   createGroup: async function({ userId, plural, groupName='', chosenUserId=null, chosenUserIds=null }) {
     if (plural) {
@@ -134,10 +132,9 @@ const database = {
     } catch(error) {
       console.error('Failed to get users');
     }
-
   },
   getRegisteredUsers: async function(currentUser) {
-    try{
+    try {
       const allUsers = await getDocs(this.users);
       const user = await getDoc(this.userRef(currentUser.uid));
       const alreadyExistedContacts = user.data().contacts;
@@ -180,7 +177,7 @@ const database = {
       });
       await this.updateGroupLastMsg(chatId, msgText, currentUser, displayName);
     } catch (e) {
-      console.log('Error when writing new message to Firebase Database', e);
+      console.error('Error when writing new message to Firebase Database', e);
     }
   }
 } 

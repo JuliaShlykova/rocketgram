@@ -12,19 +12,15 @@ export default function ChatBody({ chatId='main' }) {
   useEffect(()=>{
     const q = query(database.groupMessages(chatId),orderBy('sentAt'));
     const cleanUp = onSnapshot(q, snapshot=>{
-      // setMessages([]);
+
       let msgsSnap = [];
       let n = snapshot.docs.length;
-      snapshot.docs.forEach((doc,i)=>{
-        msgsSnap.push(doc.data());
-        // setMessages(msgs=>{
-        //   msgs.push(doc.data());
-        //   return msgs;
-        // });
-        if (i===n-1) {
-          setMessages(msgsSnap);
-        }
-      })
+        snapshot.docs.forEach((doc,i)=>{
+          msgsSnap.push(doc.data());
+          if (i===n-1) {
+            setMessages(msgsSnap);
+          }
+        })
     });
     return function(){
       setMessages([]);
@@ -33,7 +29,7 @@ export default function ChatBody({ chatId='main' }) {
   }, [chatId]);
 
   useEffect(()=>{
-      bottomRef.current?.scrollIntoView({behavior: 'smooth'});
+    bottomRef.current?.scrollIntoView({behavior: 'smooth'});
   }, [messages]);
 
   return (

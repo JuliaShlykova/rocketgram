@@ -13,7 +13,7 @@ export function AuthProvider({children}) {
   const [displayName, setDisplayName] = useState('');
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user=>{
+    const unsubscribe = onAuthStateChanged(auth, user => {
       setUser(user);
       if (user) {
         (async function(){
@@ -55,8 +55,8 @@ export function AuthProvider({children}) {
     return signOut(auth);
   }
 
-  const resetPassword = async (email) => {
-    sendPasswordResetEmail(auth, email);
+  const resetPassword = (email) => {
+    return sendPasswordResetEmail(auth, email);
   }
 
   let value={
@@ -70,7 +70,6 @@ export function AuthProvider({children}) {
 
   return (
     <AuthContext.Provider value={value}>
-      {/* {!loading&&children} */}
       {children}
     </AuthContext.Provider>
   )

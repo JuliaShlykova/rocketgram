@@ -45,7 +45,6 @@ const Menu = ({setUserWindow, setChatId}) => {
         </li>
         <li><AddNewChat setUserWindow={setUserWindow} setChatId={setChatId}/></li>
         <li><AddNewGroup setUserWindow={setUserWindow} setChatId={setChatId}/></li>
-
       </ul>)
       :<AuthenticationModal />}
     </div>

@@ -3,7 +3,6 @@
   --focused-chat: #583418;
   --basic-color:  #e6c1a6;
   --hover-chat:  #daa379;
-  /* --bcgr-image: url('assets/underwater.jpg'); */
   --text-color-basic: black;
   --text-color-other-msg: white;
 }
@@ -48,10 +47,7 @@ body *::-webkit-scrollbar-thumb:hover{
   background-position: 0 20%;
   width: 100%;
   margin-top: 35px;
-  /* position: absolute; */
   right: 0;
-  /* display: flex;
-  flex-direction: column; */
 }
 
 .chat-head {
@@ -90,13 +86,13 @@ body *::-webkit-scrollbar-thumb:hover{
   position: absolute;
   right: 0;
 }
+
 .theme {
   width:35px;
   height:35px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  
 }
 
 .theme:hover{
@@ -134,7 +130,6 @@ body *::-webkit-scrollbar-thumb:hover{
 
 .user-avatar img {
   width:30px;
-  
 }
 
 .userMsg, .compMsg {
@@ -188,7 +183,6 @@ body *::-webkit-scrollbar-thumb:hover{
 }
 
 .form-text{
-  /* border: 1px solid black; */
   flex-grow: 1;
   display: flex;
   align-items: center;
@@ -224,7 +218,6 @@ body *::-webkit-scrollbar-thumb:hover{
 
 button#submit {
   background-color: transparent;
-  /* border: 1px solid black; */
   margin-left: auto;
   color: var(--other-msg);
 }
@@ -250,7 +243,6 @@ button#submit-image {
 }
 
 button#submit-image svg {
-  /* border: 1px solid black; */
   width:25px;
   height:25px;
 }
@@ -258,11 +250,9 @@ button#submit-image svg {
 button#submit-image:hover {
   color: black;
 }
-
 /*The end of Chat properties*/
 
 /* User properties */
-
 .user-container {
   position: fixed;
   width:100vw;
@@ -306,7 +296,6 @@ button#submit-image:hover {
 }
 
 .user-menu li {
-  /* border: 1px solid black; */
   font-size: 1.5rem;
   flex-grow: 1;
   width: 100%;
@@ -382,6 +371,7 @@ button#submit-image:hover {
   font-size: 1.2rem;
   margin: 20px 0;
 }
+
 /* Add new chat */
 .add-chat-container, .add-group-container {
   position: fixed;
@@ -452,6 +442,14 @@ button#submit-image:hover {
   height: 0.6rem;
   border: 1px solid black;
   border-radius: 5px;
+}
+
+.form-add-group label:first-child{
+  margin-bottom: 20px;
+}
+
+.form-add-group input:first-child{
+  margin-top: 10px;
 }
 
 .form-add-group #user-select {
@@ -544,7 +542,7 @@ button#menu:hover {
   background-color: var(--focused-chat);
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 850px) {
   .chat-tail-container, .chat-head{
     padding-left: 50px;
   }
@@ -566,5 +564,11 @@ button#menu:hover {
   }
   .element-of-list p, .element-of-list-name p {
     overflow: hidden;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .chat-tail{
+    min-width: 300px;
   }
 }

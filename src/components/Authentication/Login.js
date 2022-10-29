@@ -33,7 +33,6 @@ export default function Login({setState, setError}) {
       <div id="link-to-forgot-password" onClick={()=>{setState('forgot-password')}}>Forgot password?</div>
     </form>
     <div>Need an account? <span id="link-to-signup" onClick={()=>{setState('signup')}}>Sign Up</span></div>
-    
   </>
   )
 }
