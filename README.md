@@ -1,6 +1,6 @@
 
 # Rocketgram (pseudo telegram)
-  To see the website visit [rocketgram]().
+  To see the website visit [rocketgram](https://rocketgram-872da.web.app/).
 ## Description
   This project is the part of [The Odin Project](https://www.theodinproject.com/). It represents a messenger similar to telegram with simplified functionality:
   - Sign up using google authentication and firebase email/password authentication;
